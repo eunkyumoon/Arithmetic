@@ -1,6 +1,6 @@
 """
 Arithmetic Calculator 클래스
-TDD RED 단계: 아직 구현되지 않음 (테스트가 실패해야 함)
+TDD GREEN 단계: 최소 단위 구현 완료
 """
 
 
@@ -8,22 +8,81 @@ class ArithmeticCalculator:
     """사칙연산 계산기 클래스"""
     
     def add(self, a: int, b: int) -> int:
-        """덧셈 연산 (아직 구현되지 않음)"""
-        raise NotImplementedError("아직 구현되지 않았습니다.")
+        """덧셈 연산
+        Step 2-1, 2-2: TC-001, TC-002 통과
+        """
+        return a + b
     
     def subtract(self, a: int, b: int) -> int:
-        """뺄셈 연산 (아직 구현되지 않음)"""
-        raise NotImplementedError("아직 구현되지 않았습니다.")
+        """뺄셈 연산
+        Step 2-3: TC-004 통과
+        """
+        return a - b
     
     def multiply(self, a: int, b: int) -> int:
         """곱셈 연산 (아직 구현되지 않음)"""
         raise NotImplementedError("아직 구현되지 않았습니다.")
     
     def divide(self, a: int, b: int) -> int:
-        """정수 나눗셈 연산 (아직 구현되지 않음)"""
-        raise NotImplementedError("아직 구현되지 않았습니다.")
+        """정수 나눗셈 연산
+        Step 2-4: TC-007 통과 (소수점 버림)
+        Step 2-6: TC-009, TC-010 통과 (예외 처리 추가)
+        
+        Args:
+            a: 첫 번째 정수
+            b: 두 번째 정수
+            
+        Returns:
+            나눗셈 결과 (정수)
+            
+        Raises:
+            ZeroDivisionError: b가 0인 경우
+        """
+        if b == 0:
+            raise ZeroDivisionError("Cannot divide by zero.")
+        return a // b
     
     def quotient(self, a: int, b: int) -> float:
         """소수점 나눗셈 연산 (아직 구현되지 않음)"""
         raise NotImplementedError("아직 구현되지 않았습니다.")
+
+
+if __name__ == "__main__":
+    """Direct execution demo output"""
+    calculator = ArithmeticCalculator()
+    
+    print("=" * 50)
+    print("Arithmetic Calculator - Execution Results")
+    print("=" * 50)
+    print()
+    
+    # Addition tests
+    print("[Addition Operations]")
+    print(f"  1 + 10 = {calculator.add(1, 10)}")
+    print(f"  0 + 1 = {calculator.add(0, 1)}")
+    print()
+    
+    # Subtraction tests
+    print("[Subtraction Operations]")
+    print(f"  5 - 2 = {calculator.subtract(5, 2)}")
+    print()
+    
+    # Division tests
+    print("[Integer Division Operations]")
+    print(f"  5 / 2 = {calculator.divide(5, 2)}")
+    print(f"  -10 / 2 = {calculator.divide(-10, 2)}")
+    print()
+    
+    # Exception handling test
+    print("[Exception Handling Test]")
+    try:
+        result = calculator.divide(0, 0)
+        print(f"  0 / 0 = {result}")
+    except ZeroDivisionError as e:
+        print(f"  0 / 0 -> Exception raised: {e}")
+    print()
+    
+    print("=" * 50)
+    print("[Complete] All tests completed!")
+    print("=" * 50)
 
