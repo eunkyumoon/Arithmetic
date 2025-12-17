@@ -115,9 +115,103 @@ gradle build
 ## 개발 단계
 
 1. ✅ README.md 작성
-2. ⏳ 테스트 클래스 작성 (RED)
+2. ✅ 테스트 클래스 작성 (RED)
 3. ⏳ 구현 클래스 작성 (GREEN)
 4. ⏳ 리팩토링 (REFACTOR)
+
+---
+
+## GREEN 단계 구현 작업 목록
+
+### 🔴 높음 (High Priority) - 중요도: 중요
+
+#### 1. 덧셈 연산 (`add`) 메서드 구현
+- [ ] **TC-001**: 양수 덧셈 - `add(1, 10) = 11`
+- [ ] **TC-002**: 0 포함 덧셈 - `add(0, 1) = 1`
+- **구현 위치**: 
+  - Java: `src/main/java/com/arithmetic/ArithmeticCalculator.java`
+  - Python: `src/arithmetic/arithmetic_calculator.py`
+
+#### 2. 뺄셈 연산 (`subtract`) 메서드 구현
+- [ ] **TC-004**: 기본 뺄셈 - `subtract(5, 2) = 3`
+- **구현 위치**: 
+  - Java: `src/main/java/com/arithmetic/ArithmeticCalculator.java`
+  - Python: `src/arithmetic/arithmetic_calculator.py`
+
+#### 3. 정수 나눗셈 (`divide`) 메서드 구현
+- [ ] **TC-007**: 정수 나눗셈 - `divide(5, 2) = 2` (소수점 버림)
+- [ ] **TC-009**: 음수 나눗셈 - `divide(-10, 2) = -5`
+- [ ] **TC-010**: 0으로 나누기 예외 처리 - `divide(0, 0)` → 예외 발생
+  - Java: `ArithmeticException` 발생
+  - Python: `ZeroDivisionError` 또는 `ArithmeticError` 발생
+- **구현 위치**: 
+  - Java: `src/main/java/com/arithmetic/ArithmeticCalculator.java`
+  - Python: `src/arithmetic/arithmetic_calculator.py`
+
+---
+
+### 🟡 중간 (Medium Priority) - 중요도: 보통
+
+#### 4. 덧셈 연산 확장 (`add`)
+- [ ] **TC-003**: 음수 덧셈 - `add(-1, -10) = -11`
+- **참고**: `add` 메서드가 이미 구현되어 있다면 추가 테스트만 통과하면 됨
+
+#### 5. 곱셈 연산 (`multiply`) 메서드 구현
+- [ ] **TC-005**: 음수 곱셈 - `multiply(-5, -3) = 15`
+- **구현 위치**: 
+  - Java: `src/main/java/com/arithmetic/ArithmeticCalculator.java`
+  - Python: `src/arithmetic/arithmetic_calculator.py`
+
+#### 6. 소수점 나눗셈 (`quotient`) 메서드 구현
+- [ ] **TC-008**: 소수점 나눗셈 - `quotient(5, 2) = 2.5`
+  - 허용 오차: 0.0001
+  - Java: `double` 반환 타입
+  - Python: `float` 반환 타입
+- **구현 위치**: 
+  - Java: `src/main/java/com/arithmetic/ArithmeticCalculator.java`
+  - Python: `src/arithmetic/arithmetic_calculator.py`
+
+---
+
+### 🟢 낮음 (Low Priority) - 중요도: 낮음
+
+#### 7. 곱셈 연산 확장 (`multiply`)
+- [ ] **TC-006**: 0 곱셈 - `multiply(0, 10) = 0`
+- **참고**: `multiply` 메서드가 이미 구현되어 있다면 추가 테스트만 통과하면 됨
+
+---
+
+### 📋 구현 체크리스트
+
+#### Java 버전
+- [ ] `ArithmeticCalculator` 클래스 생성
+- [ ] `add(int a, int b)` 메서드 구현
+- [ ] `subtract(int a, int b)` 메서드 구현
+- [ ] `multiply(int a, int b)` 메서드 구현
+- [ ] `divide(int a, int b)` 메서드 구현 (예외 처리 포함)
+- [ ] `quotient(int a, int b)` 메서드 구현
+- [ ] 모든 테스트 통과 확인: `.\mvnw.cmd test`
+- [ ] 코드 컴파일 확인: `.\mvnw.cmd compile test-compile`
+
+#### Python 버전
+- [ ] `ArithmeticCalculator` 클래스 생성
+- [ ] `add(a: int, b: int) -> int` 메서드 구현
+- [ ] `subtract(a: int, b: int) -> int` 메서드 구현
+- [ ] `multiply(a: int, b: int) -> int` 메서드 구현
+- [ ] `divide(a: int, b: int) -> int` 메서드 구현 (예외 처리 포함)
+- [ ] `quotient(a: int, b: int) -> float` 메서드 구현
+- [ ] 모든 테스트 통과 확인: `pytest -v`
+- [ ] 코드 커버리지 확인: `pytest --cov=src/arithmetic --cov-report=html`
+
+---
+
+### 🎯 구현 완료 기준
+
+- ✅ 모든 테스트 케이스 통과 (10개)
+- ✅ 코드 커버리지 100% 달성
+- ✅ 예외 처리 정상 동작 확인
+- ✅ Java와 Python 두 언어 모두 구현 완료
+- ✅ 컴파일/실행 오류 없음
 
 ## 라이선스
 
