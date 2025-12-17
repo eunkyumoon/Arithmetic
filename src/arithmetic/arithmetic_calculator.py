@@ -82,6 +82,7 @@ if __name__ == "__main__":
     # Multiplication tests
     print("[Multiplication Operations]")
     print(f"  -5 * -3 = {calculator.multiply(-5, -3)}")
+    print(f"  0 * 10 = {calculator.multiply(0, 10)}")
     print()
     
     # Division tests
