@@ -9,6 +9,7 @@ from src.arithmetic.interfaces import ICalculator, IOperationStrategy
 from src.arithmetic.operation_factory import OperationFactory
 from src.gui.validators import InputValidator
 from src.gui.formatters import ResultFormatter
+from src.gui.constants import DisplayConstants
 
 
 class CalculatorController:
@@ -29,9 +30,8 @@ class CalculatorController:
         
         # 계산 상태 관리
         self.first_operand: Optional[int] = None
-        self.second_operand: Optional[int] = None
         self.pending_operator: Optional[str] = None
-        self.display_value: str = "0"
+        self.display_value: str = DisplayConstants.DEFAULT_VALUE
         self.waiting_for_operand: bool = True
     
     def input_digit(self, digit: str) -> bool:
@@ -50,7 +50,7 @@ class CalculatorController:
             self.display_value = digit
             self.waiting_for_operand = False
         else:
-            if self.display_value == "0":
+            if self.display_value == DisplayConstants.DEFAULT_VALUE:
                 self.display_value = digit
             else:
                 self.display_value += digit
@@ -94,9 +94,7 @@ class CalculatorController:
                 self.first_operand = int(result) if isinstance(result, int) else None
                 self.display_value = self.formatter.format_result(result)
             except ZeroDivisionError:
-                self.display_value = "Error"
-                self.clear()
-                return False
+                return self._handle_division_error()
         
         self.first_operand = current
         self.pending_operator = operator
@@ -128,9 +126,17 @@ class CalculatorController:
             self.waiting_for_operand = True
             return True
         except ZeroDivisionError:
-            self.display_value = "Error"
-            self.clear()
-            return False
+            return self._handle_division_error()
+    
+    def _handle_division_error(self) -> bool:
+        """0으로 나누기 오류 처리
+        
+        Returns:
+            항상 False (오류 발생)
+        """
+        self.display_value = DisplayConstants.ERROR_MESSAGE
+        self.clear()
+        return False
     
     def _get_current_value(self) -> Optional[int]:
         """현재 표시 값을 정수로 변환
@@ -138,16 +144,15 @@ class CalculatorController:
         Returns:
             현재 값 또는 None
         """
-        if self.display_value == "Error":
+        if self.display_value == DisplayConstants.ERROR_MESSAGE:
             return None
         return self.validator.validate_number(self.display_value)
     
     def clear(self):
         """계산기 상태 초기화"""
         self.first_operand = None
-        self.second_operand = None
         self.pending_operator = None
-        self.display_value = "0"
+        self.display_value = DisplayConstants.DEFAULT_VALUE
         self.waiting_for_operand = True
     
     def toggle_sign(self):
