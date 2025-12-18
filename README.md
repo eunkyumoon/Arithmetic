@@ -194,19 +194,39 @@ python src/gui/main.py
 
 ---
 
-### 단계 5: 테스트 작성 및 리팩토링 검증
+### 단계 5: 테스트 작성 및 리팩토링 검증 ✅
 **목표**: 리팩토링 후 기능 검증
 
 **작업 내용**:
-1. 단위 테스트 작성
-2. 통합 테스트 작성
-3. GUI 테스트 (선택사항)
-4. 기존 테스트 통과 확인
+1. ✅ 단위 테스트 작성
+2. ✅ 통합 테스트 작성
+3. ⏳ GUI 테스트 (선택사항 - 수동 테스트로 대체)
+4. ✅ 기존 테스트 통과 확인
 
-**예상 결과물**:
-- `tests/test_controller.py`
-- `tests/test_operations.py`
-- `tests/test_validators.py`
+**완료된 결과물**:
+- ✅ `tests/test_controller.py` (32개 테스트)
+- ✅ `tests/test_operations.py` (29개 테스트)
+- ✅ `tests/test_validators.py` (11개 테스트)
+
+**테스트 결과**:
+- ✅ 총 82개 테스트 모두 통과
+- ✅ 기존 테스트 10개 통과 (100% 유지)
+- ✅ 새로 작성한 테스트 72개 통과
+- ✅ 코드 커버리지: 리팩토링된 모듈 전체 커버
+
+**테스트 실행 방법**:
+```bash
+# 모든 테스트 실행
+pytest tests/ -v
+
+# 특정 테스트 파일 실행
+pytest tests/test_controller.py -v
+pytest tests/test_operations.py -v
+pytest tests/test_validators.py -v
+
+# 커버리지 확인
+pytest --cov=src --cov-report=html
+```
 
 ---
 
