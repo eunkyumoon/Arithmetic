@@ -77,9 +77,33 @@ Arithmetic/
 
 ## 실행 방법
 
+### Python GUI 계산기 실행
+
+```bash
+# 가상 환경 활성화 (Windows PowerShell)
+.\.venv\Scripts\Activate.ps1
+
+# 의존성 설치
+pip install -r requirements.txt
+
+# GUI 실행
+python src/gui/main.py
+# 또는
+python run_gui.py
+```
+
+### Python 콘솔 계산기 실행
+
+```bash
+python src/console/console_calculator.py
+```
+
 ### 테스트 실행
 
 ```bash
+# Python 테스트
+pytest tests/ -v
+
 # Maven 사용 시
 mvn test
 
@@ -118,6 +142,192 @@ gradle build
 2. ✅ 테스트 클래스 작성 (RED)
 3. ⏳ 구현 클래스 작성 (GREEN)
 4. ⏳ 리팩토링 (REFACTOR)
+
+---
+
+## REFACTOR 단계: PyQt GUI 리팩토링 작업 목록
+
+### 단계 4: PyQt View 레이어 구현 ✅
+**목표**: 이미지에 맞는 계산기 UI 구현
+
+**작업 내용**:
+1. ✅ PyQt6 설치 및 설정
+2. ✅ 계산기 UI 디자인 (키패드 레이아웃)
+3. ✅ 이벤트 핸들러 연결
+4. ✅ 컨트롤러와 통합
+
+**완료된 결과물**:
+- ✅ `src/gui/view.py` (PyQt 메인 윈도우)
+- ✅ `src/gui/widgets.py` (커스텀 위젯)
+- ✅ `src/gui/main.py` (애플리케이션 진입점)
+
+**실행 방법**:
+
+**가장 쉬운 방법 (권장)**:
+```powershell
+# PowerShell
+.\run_gui.ps1
+
+# 또는 CMD
+run_gui.bat
+```
+
+**수동 실행**:
+```bash
+# 1. 가상 환경 활성화 (Windows)
+.\.venv\Scripts\Activate.ps1
+
+# 2. 의존성 설치 (가상 환경에 설치)
+pip install -r requirements.txt
+
+# 3. GUI 실행 (프로젝트 루트에서)
+python run_gui.py
+# 또는
+python src/gui/main.py
+```
+
+**주의사항**:
+- ✅ **프로젝트 루트에서 실행**: `C:\DEV\cursor_pro\Arithmetic` 디렉토리에서 실행해야 합니다
+- ✅ 가상 환경(.venv)을 사용하는 경우, 가상 환경을 활성화한 후 PyQt6를 설치해야 합니다
+- ✅ 가상 환경이 없는 경우: `python -m venv .venv`로 생성 후 활성화
+- ✅ 경로 문제 해결: `src/gui/main.py`가 자동으로 경로를 설정하므로 어디서든 실행 가능
+
+---
+
+### 단계 5: 테스트 작성 및 리팩토링 검증 ✅
+**목표**: 리팩토링 후 기능 검증
+
+**작업 내용**:
+1. ✅ 단위 테스트 작성
+2. ✅ 통합 테스트 작성
+3. ⏳ GUI 테스트 (선택사항 - 수동 테스트로 대체)
+4. ✅ 기존 테스트 통과 확인
+
+**완료된 결과물**:
+- ✅ `tests/test_controller.py` (32개 테스트)
+- ✅ `tests/test_operations.py` (29개 테스트)
+- ✅ `tests/test_validators.py` (11개 테스트)
+
+**테스트 결과**:
+- ✅ 총 82개 테스트 모두 통과
+- ✅ 기존 테스트 10개 통과 (100% 유지)
+- ✅ 새로 작성한 테스트 72개 통과
+- ✅ 코드 커버리지: 리팩토링된 모듈 전체 커버
+
+**테스트 실행 방법**:
+```bash
+# 모든 테스트 실행
+pytest tests/ -v
+
+# 특정 테스트 파일 실행
+pytest tests/test_controller.py -v
+pytest tests/test_operations.py -v
+pytest tests/test_validators.py -v
+
+# 커버리지 확인
+pytest --cov=src --cov-report=html
+```
+
+---
+
+### 단계 6: 문서화 및 정리
+**목표**: 리팩토링 결과 문서화
+
+**작업 내용**:
+1. 리팩토링 리포트 작성
+2. 사용자 가이드 작성
+3. 개발자 가이드 작성
+
+**예상 결과물**:
+- `REFACTORING_REPORT.md`
+- `GUI_USER_GUIDE.md`
+
+---
+
+## 리팩토링 구현 계획
+
+### 새로운 디렉토리 구조
+
+```
+src/
+├── arithmetic/                    # 비즈니스 로직 레이어
+│   ├── __init__.py
+│   ├── arithmetic_calculator.py  # 기존 (유지)
+│   ├── interfaces.py             # 새로 추가
+│   ├── operations.py             # 새로 추가
+│   └── operation_factory.py      # 새로 추가
+│
+├── gui/                          # GUI 레이어 (새로 추가)
+│   ├── __init__.py
+│   ├── controller.py            # 컨트롤러
+│   ├── view.py                  # PyQt 메인 윈도우
+│   ├── widgets.py               # 커스텀 위젯
+│   ├── validators.py            # 입력 검증
+│   ├── formatters.py            # 결과 포맷팅
+│   └── main.py                  # 애플리케이션 진입점
+│
+└── console/                      # 콘솔 UI (기존 유지)
+    ├── __init__.py
+    └── console_calculator.py     # 기존 (리팩토링)
+```
+
+### 의존성 추가
+
+**requirements.txt**에 추가:
+```
+PyQt6>=6.6.0
+PyQt6-Qt6>=6.6.0
+```
+
+### 클래스 다이어그램
+
+```
+┌─────────────────────┐
+│  ICalculator        │ (인터페이스)
+└─────────────────────┘
+         ▲
+         │ implements
+         │
+┌─────────────────────┐
+│ ArithmeticCalculator│
+└─────────────────────┘
+
+┌─────────────────────┐
+│ IOperationStrategy  │ (인터페이스)
+└─────────────────────┘
+         ▲
+         │ implements
+    ┌────┴────┬──────────┬──────────┐
+    │         │          │          │
+┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐
+│ AddOp   │ │ SubOp   │ │ MulOp   │ │ DivOp   │
+└─────────┘ └─────────┘ └─────────┘ └─────────┘
+
+┌─────────────────────┐
+│ OperationFactory    │
+└─────────────────────┘
+
+┌─────────────────────┐
+│ CalculatorController │
+│ - calculator         │───┐
+│ - view              │───┤
+│ - validator         │───┤
+│ - formatter         │───┤
+└─────────────────────┘   │
+                          │ uses
+┌─────────────────────┐   │
+│ CalculatorView      │◄──┘
+│ (PyQt QMainWindow)  │
+└─────────────────────┘
+```
+
+### 구현 우선순위
+
+1. **Phase 1**: 인터페이스 및 전략 패턴 구현
+2. **Phase 2**: 컨트롤러 및 검증 로직 구현
+3. **Phase 3**: PyQt UI 기본 구조 구현
+4. **Phase 4**: UI 이벤트 처리 및 통합
+5. **Phase 5**: 테스트 및 버그 수정
 
 ---
 
