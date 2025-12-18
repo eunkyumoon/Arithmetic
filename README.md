@@ -77,9 +77,33 @@ Arithmetic/
 
 ## 실행 방법
 
+### Python GUI 계산기 실행
+
+```bash
+# 가상 환경 활성화 (Windows PowerShell)
+.\.venv\Scripts\Activate.ps1
+
+# 의존성 설치
+pip install -r requirements.txt
+
+# GUI 실행
+python src/gui/main.py
+# 또는
+python run_gui.py
+```
+
+### Python 콘솔 계산기 실행
+
+```bash
+python src/console/console_calculator.py
+```
+
 ### 테스트 실행
 
 ```bash
+# Python 테스트
+pytest tests/ -v
+
 # Maven 사용 시
 mvn test
 
@@ -123,19 +147,50 @@ gradle build
 
 ## REFACTOR 단계: PyQt GUI 리팩토링 작업 목록
 
-### 단계 4: PyQt View 레이어 구현
+### 단계 4: PyQt View 레이어 구현 ✅
 **목표**: 이미지에 맞는 계산기 UI 구현
 
 **작업 내용**:
-1. PyQt6 설치 및 설정
-2. 계산기 UI 디자인 (키패드 레이아웃)
-3. 이벤트 핸들러 연결
-4. 컨트롤러와 통합
+1. ✅ PyQt6 설치 및 설정
+2. ✅ 계산기 UI 디자인 (키패드 레이아웃)
+3. ✅ 이벤트 핸들러 연결
+4. ✅ 컨트롤러와 통합
 
-**예상 결과물**:
-- `src/gui/view.py` (PyQt 메인 윈도우)
-- `src/gui/widgets.py` (커스텀 위젯)
-- `src/gui/main.py` (애플리케이션 진입점)
+**완료된 결과물**:
+- ✅ `src/gui/view.py` (PyQt 메인 윈도우)
+- ✅ `src/gui/widgets.py` (커스텀 위젯)
+- ✅ `src/gui/main.py` (애플리케이션 진입점)
+
+**실행 방법**:
+
+**가장 쉬운 방법 (권장)**:
+```powershell
+# PowerShell
+.\run_gui.ps1
+
+# 또는 CMD
+run_gui.bat
+```
+
+**수동 실행**:
+```bash
+# 1. 가상 환경 활성화 (Windows)
+.\.venv\Scripts\Activate.ps1
+
+# 2. 의존성 설치 (가상 환경에 설치)
+pip install -r requirements.txt
+
+# 3. GUI 실행 (프로젝트 루트에서)
+python run_gui.py
+# 또는
+python src/gui/main.py
+```
+
+**주의사항**:
+- ✅ **프로젝트 루트에서 실행**: `C:\DEV\cursor_pro\Arithmetic` 디렉토리에서 실행해야 합니다
+- ✅ 가상 환경(.venv)을 사용하는 경우, 가상 환경을 활성화한 후 PyQt6를 설치해야 합니다
+- ✅ 가상 환경이 없는 경우: `python -m venv .venv`로 생성 후 활성화
+- ✅ 경로 문제 해결: `src/gui/main.py`가 자동으로 경로를 설정하므로 어디서든 실행 가능
 
 ---
 
