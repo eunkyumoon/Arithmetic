@@ -121,6 +121,141 @@ gradle build
 
 ---
 
+## REFACTOR 단계: PyQt GUI 리팩토링 작업 목록
+
+### 단계 4: PyQt View 레이어 구현
+**목표**: 이미지에 맞는 계산기 UI 구현
+
+**작업 내용**:
+1. PyQt6 설치 및 설정
+2. 계산기 UI 디자인 (키패드 레이아웃)
+3. 이벤트 핸들러 연결
+4. 컨트롤러와 통합
+
+**예상 결과물**:
+- `src/gui/view.py` (PyQt 메인 윈도우)
+- `src/gui/widgets.py` (커스텀 위젯)
+- `src/gui/main.py` (애플리케이션 진입점)
+
+---
+
+### 단계 5: 테스트 작성 및 리팩토링 검증
+**목표**: 리팩토링 후 기능 검증
+
+**작업 내용**:
+1. 단위 테스트 작성
+2. 통합 테스트 작성
+3. GUI 테스트 (선택사항)
+4. 기존 테스트 통과 확인
+
+**예상 결과물**:
+- `tests/test_controller.py`
+- `tests/test_operations.py`
+- `tests/test_validators.py`
+
+---
+
+### 단계 6: 문서화 및 정리
+**목표**: 리팩토링 결과 문서화
+
+**작업 내용**:
+1. 리팩토링 리포트 작성
+2. 사용자 가이드 작성
+3. 개발자 가이드 작성
+
+**예상 결과물**:
+- `REFACTORING_REPORT.md`
+- `GUI_USER_GUIDE.md`
+
+---
+
+## 리팩토링 구현 계획
+
+### 새로운 디렉토리 구조
+
+```
+src/
+├── arithmetic/                    # 비즈니스 로직 레이어
+│   ├── __init__.py
+│   ├── arithmetic_calculator.py  # 기존 (유지)
+│   ├── interfaces.py             # 새로 추가
+│   ├── operations.py             # 새로 추가
+│   └── operation_factory.py      # 새로 추가
+│
+├── gui/                          # GUI 레이어 (새로 추가)
+│   ├── __init__.py
+│   ├── controller.py            # 컨트롤러
+│   ├── view.py                  # PyQt 메인 윈도우
+│   ├── widgets.py               # 커스텀 위젯
+│   ├── validators.py            # 입력 검증
+│   ├── formatters.py            # 결과 포맷팅
+│   └── main.py                  # 애플리케이션 진입점
+│
+└── console/                      # 콘솔 UI (기존 유지)
+    ├── __init__.py
+    └── console_calculator.py     # 기존 (리팩토링)
+```
+
+### 의존성 추가
+
+**requirements.txt**에 추가:
+```
+PyQt6>=6.6.0
+PyQt6-Qt6>=6.6.0
+```
+
+### 클래스 다이어그램
+
+```
+┌─────────────────────┐
+│  ICalculator        │ (인터페이스)
+└─────────────────────┘
+         ▲
+         │ implements
+         │
+┌─────────────────────┐
+│ ArithmeticCalculator│
+└─────────────────────┘
+
+┌─────────────────────┐
+│ IOperationStrategy  │ (인터페이스)
+└─────────────────────┘
+         ▲
+         │ implements
+    ┌────┴────┬──────────┬──────────┐
+    │         │          │          │
+┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐
+│ AddOp   │ │ SubOp   │ │ MulOp   │ │ DivOp   │
+└─────────┘ └─────────┘ └─────────┘ └─────────┘
+
+┌─────────────────────┐
+│ OperationFactory    │
+└─────────────────────┘
+
+┌─────────────────────┐
+│ CalculatorController │
+│ - calculator         │───┐
+│ - view              │───┤
+│ - validator         │───┤
+│ - formatter         │───┤
+└─────────────────────┘   │
+                          │ uses
+┌─────────────────────┐   │
+│ CalculatorView      │◄──┘
+│ (PyQt QMainWindow)  │
+└─────────────────────┘
+```
+
+### 구현 우선순위
+
+1. **Phase 1**: 인터페이스 및 전략 패턴 구현
+2. **Phase 2**: 컨트롤러 및 검증 로직 구현
+3. **Phase 3**: PyQt UI 기본 구조 구현
+4. **Phase 4**: UI 이벤트 처리 및 통합
+5. **Phase 5**: 테스트 및 버그 수정
+
+---
+
 ## GREEN 단계 구현 작업 목록
 
 ### 🔴 높음 (High Priority) - 중요도: 중요
